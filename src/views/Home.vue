@@ -60,10 +60,7 @@ export default {
     },
     methods: {
         addToSlack() {
-            window.location.href = `https://slack.com/oauth/v2/authorize?client_id=5509077477906.5506150689413&scope=channels:read,chat:write,chat:write.customize&user_scope=channels:read,chat:write&redirect_uri=${window.location.origin.replace(
-                "http",
-                "https"
-            )}/login`;
+            window.location.href = `https://slack.com/oauth/v2/authorize?client_id=5509077477906.5506150689413&scope=channels:read,chat:write,chat:write.customize&user_scope=channels:read,chat:write&redirect_uri=${window.location.origin}/login`;
         },
     },
 };

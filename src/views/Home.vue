@@ -2,7 +2,7 @@
     <div class="login flex flex-align flex-justify">
         <!-- <button class="slack" @click="loginWithSlack()">Login With Slack</button> -->
         <a
-            href="https://slack.com/oauth/v2/authorize?scope=channels%3Aread%2Cchat%3Awrite%2Cchat%3Awrite.customize&amp;user_scope=channels%3Aread%2Cchat%3Awrite&amp;redirect_uri=https%3A%2F%2Flocalhost%3A5173%2Flogin&amp;client_id=5509077477906.5506150689413"
+            @click="addToSlack()"
             style="
                 align-items: center;
                 color: #000;
@@ -17,6 +17,7 @@
                 justify-content: center;
                 text-decoration: none;
                 width: 236px;
+                cursor: pointer;
             "
             ><svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +58,14 @@ export default {
             this.$router.push({ name: "config" });
         }
     },
-    methods: {},
+    methods: {
+        addToSlack() {
+            window.location.href = `https://slack.com/oauth/v2/authorize?client_id=5509077477906.5506150689413&scope=channels:read,chat:write,chat:write.customize&user_scope=channels:read,chat:write&redirect_uri=${window.location.origin.replace(
+                "http",
+                "https"
+            )}/login`;
+        },
+    },
 };
 </script>
 

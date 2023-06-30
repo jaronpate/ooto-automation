@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600&family=Source+Code+Pro&display=swap");
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Manrope", sans-serif;
+    font-size: 16px;
+    background: #eeeeee;
+    color: #212121;
+}
+
+.monospace {
+    font-family: "Source Code Pro", monospace;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-align {
+    align-items: center;
+}
+
+.flex-justify {
+    justify-content: center;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.ff {
+    flex: 1;
+}
+
+input,
+select {
+    padding: 5px;
+    border-radius: 3px;
+    border: 1px solid #212121;
+    background-color: #eeeeee;
+    color: #212121;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.form input,
+.form select {
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 3px 13px;
+    border-radius: 3px;
+    /* border: 1px solid #0d7377; */
+    border: none;
+    background-color: #0d7377;
+    color: #f6f1f1;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #129397;
+}

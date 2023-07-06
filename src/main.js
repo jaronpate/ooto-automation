@@ -12,14 +12,14 @@ import router from "./router";
 const app = createApp(App);
 
 // Initialize Supabase
-const supabase = createClient(
-    "https://cbrtigdzyikloutoeyqv.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNicnRpZ2R6eWlrbG91dG9leXF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODgwOTc1MTUsImV4cCI6MjAwMzY3MzUxNX0._FEP3iqGnCLO_iA_No8aJ4REGLkMLECAIcW86QeqmJ0"
-);
-// const supabase = createClient(
-//     "http://localhost:54321",
-//     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0"
-// );
+const SUPABASE_URL =
+    process.env.NODE_ENV === "development" ? "http://localhost:54321" : "https://cbrtigdzyikloutoeyqv.supabase.co";
+const SUPABASE_ANON_KEY =
+    process.env.NODE_ENV === "development"
+        ? "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0"
+        : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNicnRpZ2R6eWlrbG91dG9leXF2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODgwOTc1MTUsImV4cCI6MjAwMzY3MzUxNX0._FEP3iqGnCLO_iA_No8aJ4REGLkMLECAIcW86QeqmJ0";
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Make Supabase available to the application
 app.config.globalProperties.$supabase = supabase;

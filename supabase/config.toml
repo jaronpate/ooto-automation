@@ -5,6 +5,9 @@ project_id = "ooto-automation"
 [functions.ooto-automation]
 verify_jwt = false
 
+[functions.slack-auth]
+verify_jwt = false
+
 [api]
 # Port to use for the API URL.
 port = 54321

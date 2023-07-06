@@ -2,7 +2,7 @@
     <div class="config flex flex-align flex-justify flex-column" v-if="user && info">
         <div class="section flex flex-align flex-row">
             <div class="flex flex-align flex-row">
-                <img class="pfp" :src="user.user_metadata.avatar_url" />
+                <img class="pfp" :src="user.user_metadata.image_url" />
                 <div class="info flex flex-column">
                     <div class="email">{{ user.email }}</div>
                     <div class="subtext">
@@ -100,6 +100,22 @@ export default {
         };
     },
     async created() {
+        // check for token in url query params
+        const token = this.$route.query.token;
+
+        if (token) {
+            console.log("token found ", token);
+            const { data, error } = await this.$supabase.auth.refreshSession({ refresh_token: token });
+            if (data) {
+                console.log("logged in");
+                console.log(data);
+                this.$router.push({ name: "config" });
+            }
+        } else {
+            console.log("no token found");
+        }
+    },
+    async mounted() {
         // fetch timezones
         const { data: timezones } = await this.$axios.get("https://worldtimeapi.org/api/timezone");
         this.timezones = timezones.map((timezone) => {
@@ -110,10 +126,13 @@ export default {
         });
 
         const { data, error } = await this.$supabase.auth.getSession();
+        console.log(data);
+        console.log(error);
         if (data.session) {
             console.log(data);
 
             if (data.session.provider_token) {
+                console.log("updating user");
                 const { error } = await this.$supabase.auth.updateUser({
                     data: {
                         provider_token: data.session.provider_token,
@@ -127,7 +146,11 @@ export default {
             this.ooto_channel = this.user.user_metadata.ooto_channel;
             this.ooto_message_format = this.user.user_metadata.ooto_message_format;
             // this.ooto_webhook_url = `${window.location.origin}/api/ooto/${this.user.id}`;
-            this.ooto_webhook_url = `https://cbrtigdzyikloutoeyqv.supabase.co/functions/v1/ooto-automation/${this.user.id}`;
+            this.ooto_webhook_url = `${
+                process.env.NODE_ENV === "development"
+                    ? "http://localhost:54321"
+                    : "https://cbrtigdzyikloutoeyqv.supabase.co"
+            }/functions/v1/ooto-automation/${this.user.id}`;
 
             const { data: info } = await this.$slack.post("auth.test");
 
@@ -143,7 +166,7 @@ export default {
                 this.channels = response.channels;
             }
         } else {
-            this.$router.push({ name: "login" });
+            this.$router.push({ name: "home" });
         }
     },
     methods: {
@@ -156,7 +179,7 @@ export default {
         async logout() {
             const { error } = await this.$supabase.auth.signOut();
             if (!error) {
-                this.$router.push({ name: "login" });
+                this.$router.push({ name: "home" });
             }
         },
         async save() {

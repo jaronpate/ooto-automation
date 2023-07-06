@@ -39,15 +39,14 @@
                 <path
                     d="M77.6 97c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9-12.9-5.8-12.9-12.9V97h12.9zm0-6.5c-7.1 0-12.9-5.8-12.9-12.9s5.8-12.9 12.9-12.9h32.3c7.1 0 12.9 5.8 12.9 12.9s-5.8 12.9-12.9 12.9H77.6z"
                     fill="#ecb22e"
-                ></path></svg
-            >Add to Slack</a
+                ></path></svg>Add to Slack</a
         >
     </div>
 </template>
 
 <script>
 export default {
-    name: "Login",
+    name: "Home",
     components: {},
     data() {
         return {};
@@ -60,7 +59,11 @@ export default {
     },
     methods: {
         addToSlack() {
-            window.location.href = `https://slack.com/oauth/v2/authorize?client_id=5509077477906.5506150689413&scope=channels:read,chat:write,chat:write.customize&user_scope=channels:read,chat:write&redirect_uri=${window.location.origin}/login`;
+            window.location.href = `https://slack.com/oauth/v2/authorize?client_id=5509077477906.5506150689413&scope=commands&user_scope=users:read.email,users:read,channels:read,chat:write&redirect_uri=${
+                process.env.NODE_ENV === "development"
+                    ? "https://localhost:54321"
+                    : "https://cbrtigdzyikloutoeyqv.supabase.co"
+            }/functions/v1/slack-auth`;
         },
     },
 };
